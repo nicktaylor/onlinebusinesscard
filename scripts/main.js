@@ -27,7 +27,6 @@ window.addEventListener('load', () => {
     top.addEventListener('mouseover', (e) => {
         e.stopPropagation();
         if (!overCard) {
-            console.log("IN CARD MOUSE OVER")
             overCard = true;
             TweenMax.to(card, 0.5, {
                 rotationZ: '0deg',
@@ -86,9 +85,6 @@ window.addEventListener('load', () => {
         }
         span = !span;
     });
-
-
-})
-;
+});
 
 
