@@ -12,10 +12,12 @@ body {
   display: flex;
   flex-grow: 1;
   height: 100%;
+  position: fixed;
+  width: 100%;
 }
 
 .container {
-  width: 300px;
+  width: 420px;
   margin: 0 auto;
   perspective: 600px;
   position: relative;
@@ -25,9 +27,10 @@ body {
   transform-style: preserve-3d;
   position: absolute;
   transform: translateZ(-150px);
-  height: 300px;
-  width: 300px;
+  height: 420px;
+  width: 420px;
   top: -600px;
+  cursor: pointer;
 
   > div {
     border-radius: 20px;
@@ -47,39 +50,48 @@ body {
 
   .left, .right, .front, .back {
     border-style: dashed;
-    border-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.7);
     border-width: 3px;
+    pointer-events: none;
   }
 
   .top {
-    transform: rotateX(90deg) translateZ(120px);
+    transform: rotateX(90deg) translateZ(130px);
     height: 240px;
+    svg {
+      width: calc(100% - 80px);
+      pointer-events: none;
+    }
   }
 
   .bottom {
-    transform: rotateX(-90deg) translateZ(-100px);
+    transform: rotateX(-270deg) rotateY(180deg) translateZ(-90px);
     height: 240px;
   }
 
   .left {
-    transform: rotateY(-90deg) translateZ(120px);
+    transform: rotateY(-90deg) translateZ(110px);
+    background: none;
     width: 240px;
     height: 20px;
   }
 
   .right {
-    transform: rotateY(90deg) translateZ(180px);
+    transform: rotateY(90deg) translateZ(290px);
+    background: none;
     width: 240px;
     height: 20px;
   }
 
   .front {
-    transform: rotateY(0) translateZ(120px);
+    transform: rotateY(0) translateZ(110px);
+    background: none;
     height: 20px;
   }
 
   .back {
     transform: rotateY(180deg) translateZ(120px);
+    background: none;
     height: 20px;
   }
 
@@ -101,9 +113,48 @@ body {
 
   &.show-front {
     transform: translateZ(-150px) rotateY(0deg);
+    background: none;
   }
 
   &.show-back {
     transform: translateZ(-150px) rotateY(180deg);
   }
+
+  .bottom {
+    font-size: 0.6em;
+
+    header {
+      margin-bottom: 20px;
+
+      h2, h3 {
+        margin: 0;
+      }
+    }
+
+    .text-group:not(:last-child) {
+      margin-bottom: 20px;
+    }
+    .text-group {
+      p {
+        margin: 0;
+        font-weight: normal;
+      }
+    }
+  }
 }
+
+@media (max-width: 768px) {
+  .container {
+    perspective: 600px;
+    width: 250px;
+  }
+
+  .cube {
+    zoom: 0.5;
+  }
+
+  .bottom {
+    font-size: 0.45em!important;
+  }
+}
+
