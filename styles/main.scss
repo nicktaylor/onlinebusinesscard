@@ -16,6 +16,10 @@ body {
   width: 100%;
 }
 
+a {
+  color: white;
+}
+
 .container {
   width: 420px;
   margin: 0 auto;
@@ -59,7 +63,7 @@ body {
     transform: rotateX(90deg) translateZ(130px);
     height: 240px;
     svg {
-      width: calc(100% - 80px);
+      width: 85%;
       pointer-events: none;
     }
   }
@@ -158,3 +162,6 @@ body {
   }
 }
 
+svg:not(:root), symbol, image, marker, pattern, foreignObject {
+  overflow: hidden;
+}

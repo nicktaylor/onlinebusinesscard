@@ -12,38 +12,38 @@ window.addEventListener('load', () => {
     let middleY = calcHeight(top.clientHeight);
 
     let span = false;
-    let overCard = false;
+    let spinning = false;
+    let overCard = true;
 
-    var t2 = new TimelineLite({paused: true});
-    t2.add(TweenMax.to(card, 1.0, {
+    var spinToBack = new TimelineLite({paused: true});
+    spinToBack.add(TweenMax.to(card, 1.0, {
         rotationY: '-=180_cw',
         x: '+=50px',
         z: '+=' + (middleY / 1.5) + 'px',
         top: middleY,
         transformOrigin: '50%, 80%'
     }));
-    t2.add(TweenMax.to(card, 0.5, {rotationX: '-=35_ccw', top: middleY - 100}));
-
-    top.addEventListener('mouseover', (e) => {
-        e.stopPropagation();
-        if (!overCard) {
-            overCard = true;
-            TweenMax.to(card, 0.5, {
-                rotationZ: '0deg',
-                rotationX: (startPosY + 15) + 'deg',
-                transformOrigin: '50%, 20%',
-                top: middleY
-            })
-        }
-    });
-    top.addEventListener('mouseout', (e) => {
-        console.log("IN CARD MOUSE OUT")
-        overCard = false;
-    });
+    spinToBack.add(TweenMax.to(card, 0.5, {rotationX: '-=35_ccw', top: middleY - 100}));
 
     var t1 = new TimelineMax();
     t1.add(TweenMax.to(card, 1.5, {rotationX: '-=70_cw', z: '+=180px', top: middleY}));
     t1.addCallback(() => {
+        top.addEventListener('mouseover', (e) => {
+            e.stopPropagation();
+            if (!overCard) {
+                overCard = true;
+                TweenMax.to(card, 0.5, {
+                    rotationZ: '0deg',
+                    rotationX: (startPosY + 15) + 'deg',
+                    transformOrigin: '50%, 20%',
+                    top: middleY
+                })
+            }
+        });
+        top.addEventListener('mouseout', (e) => {
+            overCard = false;
+        });
+
         const wHc = window.innerHeight / 2;
         const wWc = window.innerWidth / 2;
         const maxTurnX = 30;
@@ -53,7 +53,7 @@ window.addEventListener('load', () => {
         const moveThreshold = 20;
 
         const handleMove = (e) => {
-            if (!span && !overCard) {
+            if (!span && !overCard && !spinning) {
                 const clickX = (e.clientX || e.pageX);
                 const clickY = (e.clientY || e.pageY);
                 const xDif = lastPosX - clickX;
@@ -78,12 +78,18 @@ window.addEventListener('load', () => {
     });
 
     card.addEventListener("click", () => {
+        if (spinning) {
+            return;
+        }
         if (span) {
-            t2.reverse();
+            spinToBack.reverse();
         } else {
-            t2.play();
+            spinToBack.play();
         }
         span = !span;
+        spinning = true;
+        // HACK: Find out how to call event on completion, or rethink this
+        setTimeout(() => spinning = false, 1700);
     });
 });
 

@@ -3,6 +3,7 @@
     "dev": "parcel index.html"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "sass": "^1.22.10"
   },
   "dependencies": {
