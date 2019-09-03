@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
 
     let span = false;
     let spinning = false;
-    let overCard = true;
+    let overCard = false;
 
     var spinToBack = new TimelineLite({paused: true});
     spinToBack.add(TweenMax.to(card, 1.0, {
